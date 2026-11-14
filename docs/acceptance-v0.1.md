@@ -169,3 +169,16 @@ E2E 调试裁定：首次完整运行两处 `page.screenshot` 在 `LQL_HIDDEN=1`
 | 内容 | 166 个文件，13,464 行新增 |
 
 提交前未纳入误生成的临时审计输出。提交后工作区干净，`git ls-remote --heads origin` 返回上述提交，GitHub API 确认仓库为 `public` 且默认分支为 `main`。本机直连 GitHub 的 TLS 握手失败，推送在单条命令内临时指定 `http.proxy` / `https.proxy` 为 `http://127.0.0.1:7890` 并使用 `http.sslBackend=openssl`，未修改全局 Git 配置。提交后 `npm run typecheck` 退出 0，`npm test` 53 通过 / 2 跳过。项目自身许可证仍未选定，仓库暂不含项目 `LICENSE` 文件；推送不改变上述应用准入待审核状态。
+## 2026-11-14 AppID 审核表已提交
+
+上一段结论是传输对照探针未把 403 归为 Electron 网络栈故障。应用所有者已通过 [审核表](https://aka.ms/mce-reviewappid) 以 `New AppID for Approval` 提交申请；表单返回 “Thank you for contacting Mojang Studios.”，证明表单已受理。提交内容使用 Azure 门户 `Luquora Launcher` 应用注册“概述”页显示的字段：
+
+| 字段 | 值 |
+| --- | --- |
+| Application ID | `e3cb9f3c-2e1e-426a-8a07-2bc774342b94` |
+| Directory (Tenant) ID | `7dd637fb-816a-4ad3-b368-4e06220fc785` |
+| 域名 | `211472325qq.onmicrosoft.com` |
+| 联系邮箱 | 与门户当前登录账户一致 |
+| 网站 | `https://github.com/jack-oliver-123/luquora-launcher` |
+
+早先草稿误将应用“对象 ID” `42c351ff-1bf0-4240-ad06-79fdc452e7d5` 当作 Tenant ID；该草稿并未提交，因此没有错误回复进入审核队列。说明明确写明 LQL 不绕过身份验证和正版校验、不提供离线模式、不复用其他启动器的 Client ID，以及当前失败于 `auth:minecraft` 的 HTTP 403。表单声明每周审核，重复提交不会加快；审核结果与 allow list 生效时间未知，在获批并用真实账号走通 Minecraft 令牌、权益和正版服务器前，不宣称正版登录已完成。
