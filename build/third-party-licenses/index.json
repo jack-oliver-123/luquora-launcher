@@ -1,0 +1,852 @@
+[
+  {
+    "name": "@azure/msal-common",
+    "version": "16.16.2",
+    "license": "MIT",
+    "repository": "https://github.com/AzureAD/microsoft-authentication-library-for-js.git",
+    "files": [
+      "@azure+msal-common@16.16.2-LICENSE"
+    ]
+  },
+  {
+    "name": "@azure/msal-node",
+    "version": "7.2.2",
+    "license": "MIT",
+    "repository": "https://github.com/AzureAD/microsoft-authentication-library-for-js.git",
+    "files": [
+      "@azure+msal-node@7.2.2-LICENSE"
+    ]
+  },
+  {
+    "name": "@babel/helper-string-parser",
+    "version": "7.29.14",
+    "license": "MIT",
+    "repository": "https://github.com/babel/babel.git",
+    "files": [
+      "@babel+helper-string-parser@7.29.14-LICENSE"
+    ]
+  },
+  {
+    "name": "@babel/helper-validator-identifier",
+    "version": "7.29.7",
+    "license": "MIT",
+    "repository": "https://github.com/babel/babel.git",
+    "files": [
+      "@babel+helper-validator-identifier@7.29.7-LICENSE"
+    ]
+  },
+  {
+    "name": "@babel/parser",
+    "version": "7.29.14",
+    "license": "MIT",
+    "repository": "https://github.com/babel/babel.git",
+    "files": [
+      "@babel+parser@7.29.14-LICENSE"
+    ]
+  },
+  {
+    "name": "@babel/types",
+    "version": "7.29.14",
+    "license": "MIT",
+    "repository": "https://github.com/babel/babel.git",
+    "files": [
+      "@babel+types@7.29.14-LICENSE"
+    ]
+  },
+  {
+    "name": "@css-render/plugin-bem",
+    "version": "0.15.14",
+    "license": "MIT",
+    "repository": "https://github.com/07akioni/css-render",
+    "files": []
+  },
+  {
+    "name": "@css-render/vue3-ssr",
+    "version": "0.15.14",
+    "license": "MIT",
+    "repository": "",
+    "files": []
+  },
+  {
+    "name": "@emotion/hash",
+    "version": "0.8.0",
+    "license": "MIT",
+    "repository": "https://github.com/emotion-js/emotion/tree/master/packages/hash",
+    "files": [
+      "@emotion+hash@0.8.0-LICENSE"
+    ]
+  },
+  {
+    "name": "@jridgewell/sourcemap-codec",
+    "version": "1.6.0",
+    "license": "MIT",
+    "repository": "git+https://github.com/jridgewell/sourcemaps.git",
+    "files": [
+      "@jridgewell+sourcemap-codec@1.6.0-LICENSE"
+    ]
+  },
+  {
+    "name": "@juggle/resize-observer",
+    "version": "3.4.0",
+    "license": "Apache-2.0",
+    "repository": "git+ssh://git@github.com/juggle/resize-observer.git",
+    "files": [
+      "@juggle+resize-observer@3.4.0-LICENSE"
+    ]
+  },
+  {
+    "name": "@types/http-cache-semantics",
+    "version": "4.2.0",
+    "license": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "files": [
+      "@types+http-cache-semantics@4.2.0-LICENSE"
+    ]
+  },
+  {
+    "name": "@types/lodash",
+    "version": "4.17.27",
+    "license": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "files": [
+      "@types+lodash@4.17.27-LICENSE"
+    ]
+  },
+  {
+    "name": "@types/lodash-es",
+    "version": "4.17.12",
+    "license": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "files": [
+      "@types+lodash-es@4.17.12-LICENSE"
+    ]
+  },
+  {
+    "name": "@types/node",
+    "version": "24.10.1",
+    "license": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "files": [
+      "@types+node@24.10.1-LICENSE"
+    ]
+  },
+  {
+    "name": "@types/yauzl",
+    "version": "2.10.3",
+    "license": "MIT",
+    "repository": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+    "files": [
+      "@types+yauzl@2.10.3-LICENSE"
+    ]
+  },
+  {
+    "name": "@vicons/ionicons5",
+    "version": "0.13.0",
+    "license": "MIT",
+    "repository": "",
+    "files": []
+  },
+  {
+    "name": "@vue/compiler-core",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "@vue+compiler-core@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "@vue/compiler-dom",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "@vue+compiler-dom@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "@vue/compiler-sfc",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "@vue+compiler-sfc@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "@vue/compiler-ssr",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "@vue+compiler-ssr@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "@vue/reactivity",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "@vue+reactivity@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "@vue/runtime-core",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "@vue+runtime-core@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "@vue/runtime-dom",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "@vue+runtime-dom@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "@vue/server-renderer",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "@vue+server-renderer@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "@vue/shared",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "@vue+shared@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "@xmcl/asm",
+    "version": "1.0.1",
+    "license": "MIT",
+    "repository": "git+https://github.com/Voxelum/minecraft-launcher-core-node.git",
+    "files": [
+      "@xmcl+asm@1.0.1-LICENSE"
+    ]
+  },
+  {
+    "name": "@xmcl/core",
+    "version": "2.15.1",
+    "license": "MIT",
+    "repository": "git+https://github.com/Voxelum/minecraft-launcher-core-node.git",
+    "files": [
+      "@xmcl+core@2.15.1-LICENSE"
+    ]
+  },
+  {
+    "name": "@xmcl/file-transfer",
+    "version": "2.0.3",
+    "license": "MIT",
+    "repository": "git+https://github.com/Voxelum/minecraft-launcher-core-node.git",
+    "files": [
+      "@xmcl+file-transfer@2.0.3-LICENSE"
+    ]
+  },
+  {
+    "name": "@xmcl/forge-site-parser",
+    "version": "2.0.9",
+    "license": "MIT",
+    "repository": "git+https://github.com/Voxelum/minecraft-launcher-core-node.git",
+    "files": [
+      "@xmcl+forge-site-parser@2.0.9-LICENSE"
+    ]
+  },
+  {
+    "name": "@xmcl/installer",
+    "version": "6.1.2",
+    "license": "MIT",
+    "repository": "git+https://github.com/Voxelum/minecraft-launcher-core-node.git",
+    "files": [
+      "@xmcl+installer@6.1.2-LICENSE"
+    ]
+  },
+  {
+    "name": "@xmcl/task",
+    "version": "4.1.1",
+    "license": "MIT",
+    "repository": "git+https://github.com/Voxelum/minecraft-launcher-core-node.git",
+    "files": [
+      "@xmcl+task@4.1.1-LICENSE"
+    ]
+  },
+  {
+    "name": "@xmcl/unzip",
+    "version": "2.1.2",
+    "license": "MIT",
+    "repository": "git+https://github.com/Voxelum/minecraft-launcher-core-node.git",
+    "files": [
+      "@xmcl+unzip@2.1.2-LICENSE"
+    ]
+  },
+  {
+    "name": "@xmcl/user",
+    "version": "4.4.2",
+    "license": "MIT",
+    "repository": "git+https://github.com/Voxelum/x-minecraft-launcher.git",
+    "files": [
+      "@xmcl+user@4.4.2-LICENSE"
+    ]
+  },
+  {
+    "name": "async-validator",
+    "version": "4.2.5",
+    "license": "MIT",
+    "repository": "git@github.com:yiminghe/async-validator.git",
+    "files": [
+      "async-validator@4.2.5-LICENSE.md"
+    ]
+  },
+  {
+    "name": "boolbase",
+    "version": "1.0.0",
+    "license": "ISC",
+    "repository": "https://github.com/fb55/boolbase",
+    "files": []
+  },
+  {
+    "name": "buffer-crc32",
+    "version": "0.2.13",
+    "license": "MIT",
+    "repository": "git://github.com/brianloveswords/buffer-crc32.git",
+    "files": [
+      "buffer-crc32@0.2.13-LICENSE"
+    ]
+  },
+  {
+    "name": "buffer-equal-constant-time",
+    "version": "1.0.1",
+    "license": "BSD-3-Clause",
+    "repository": "git@github.com:goinstant/buffer-equal-constant-time.git",
+    "files": [
+      "buffer-equal-constant-time@1.0.1-LICENSE.txt"
+    ]
+  },
+  {
+    "name": "css-render",
+    "version": "0.15.14",
+    "license": "MIT",
+    "repository": "https://github.com/07akioni/css-render",
+    "files": []
+  },
+  {
+    "name": "css-select",
+    "version": "5.2.2",
+    "license": "BSD-2-Clause",
+    "repository": "git://github.com/fb55/css-select.git",
+    "files": [
+      "css-select@5.2.2-LICENSE"
+    ]
+  },
+  {
+    "name": "css-what",
+    "version": "6.2.2",
+    "license": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/css-what",
+    "files": [
+      "css-what@6.2.2-LICENSE"
+    ]
+  },
+  {
+    "name": "csstype",
+    "version": "3.0.11",
+    "license": "MIT",
+    "repository": "https://github.com/frenic/csstype",
+    "files": [
+      "csstype@3.0.11-LICENSE"
+    ]
+  },
+  {
+    "name": "csstype",
+    "version": "3.2.3",
+    "license": "MIT",
+    "repository": "https://github.com/frenic/csstype",
+    "files": [
+      "csstype@3.2.3-LICENSE"
+    ]
+  },
+  {
+    "name": "date-fns",
+    "version": "4.4.0",
+    "license": "MIT",
+    "repository": "https://github.com/date-fns/date-fns",
+    "files": [
+      "date-fns@4.4.0-LICENSE.md"
+    ]
+  },
+  {
+    "name": "date-fns-tz",
+    "version": "3.2.0",
+    "license": "MIT",
+    "repository": "https://github.com/marnusw/date-fns-tz",
+    "files": [
+      "date-fns-tz@3.2.0-LICENSE.md"
+    ]
+  },
+  {
+    "name": "dom-serializer",
+    "version": "2.0.0",
+    "license": "MIT",
+    "repository": "git://github.com/cheeriojs/dom-serializer.git",
+    "files": [
+      "dom-serializer@2.0.0-LICENSE"
+    ]
+  },
+  {
+    "name": "domelementtype",
+    "version": "2.3.0",
+    "license": "BSD-2-Clause",
+    "repository": "git://github.com/fb55/domelementtype.git",
+    "files": [
+      "domelementtype@2.3.0-LICENSE"
+    ]
+  },
+  {
+    "name": "domhandler",
+    "version": "5.0.3",
+    "license": "BSD-2-Clause",
+    "repository": "git://github.com/fb55/domhandler.git",
+    "files": [
+      "domhandler@5.0.3-LICENSE"
+    ]
+  },
+  {
+    "name": "domutils",
+    "version": "3.2.2",
+    "license": "BSD-2-Clause",
+    "repository": "git://github.com/fb55/domutils.git",
+    "files": [
+      "domutils@3.2.2-LICENSE"
+    ]
+  },
+  {
+    "name": "ecdsa-sig-formatter",
+    "version": "1.0.11",
+    "license": "Apache-2.0",
+    "repository": "git+ssh://git@github.com/Brightspace/node-ecdsa-sig-formatter.git",
+    "files": [
+      "ecdsa-sig-formatter@1.0.11-LICENSE"
+    ]
+  },
+  {
+    "name": "entities",
+    "version": "7.0.1",
+    "license": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/entities.git",
+    "files": [
+      "entities@7.0.1-LICENSE"
+    ]
+  },
+  {
+    "name": "entities",
+    "version": "4.5.0",
+    "license": "BSD-2-Clause",
+    "repository": "git://github.com/fb55/entities.git",
+    "files": [
+      "entities@4.5.0-LICENSE"
+    ]
+  },
+  {
+    "name": "estree-walker",
+    "version": "2.0.2",
+    "license": "MIT",
+    "repository": "https://github.com/Rich-Harris/estree-walker",
+    "files": [
+      "estree-walker@2.0.2-LICENSE"
+    ]
+  },
+  {
+    "name": "estree-walker",
+    "version": "2.0.2",
+    "license": "MIT",
+    "repository": "https://github.com/Rich-Harris/estree-walker",
+    "files": [
+      "estree-walker@2.0.2-LICENSE"
+    ]
+  },
+  {
+    "name": "evtd",
+    "version": "0.2.4",
+    "license": "MIT",
+    "repository": "",
+    "files": [
+      "evtd@0.2.4-LICENSE"
+    ]
+  },
+  {
+    "name": "fd-slicer",
+    "version": "1.1.0",
+    "license": "MIT",
+    "repository": "git://github.com/andrewrk/node-fd-slicer.git",
+    "files": [
+      "fd-slicer@1.1.0-LICENSE"
+    ]
+  },
+  {
+    "name": "he",
+    "version": "1.2.0",
+    "license": "MIT",
+    "repository": "https://github.com/mathiasbynens/he.git",
+    "files": []
+  },
+  {
+    "name": "highlight.js",
+    "version": "11.12.0",
+    "license": "BSD-3-Clause",
+    "repository": "git://github.com/highlightjs/highlight.js.git",
+    "files": [
+      "highlight.js@11.12.0-LICENSE"
+    ]
+  },
+  {
+    "name": "http-cache-semantics",
+    "version": "4.3.0",
+    "license": "BSD-2-Clause",
+    "repository": "git+https://github.com/kornelski/http-cache-semantics.git",
+    "files": [
+      "http-cache-semantics@4.3.0-LICENSE"
+    ]
+  },
+  {
+    "name": "jsonwebtoken",
+    "version": "9.0.3",
+    "license": "MIT",
+    "repository": "https://github.com/auth0/node-jsonwebtoken",
+    "files": [
+      "jsonwebtoken@9.0.3-LICENSE"
+    ]
+  },
+  {
+    "name": "jwa",
+    "version": "2.0.1",
+    "license": "MIT",
+    "repository": "git://github.com/brianloveswords/node-jwa.git",
+    "files": [
+      "jwa@2.0.1-LICENSE"
+    ]
+  },
+  {
+    "name": "jws",
+    "version": "4.0.1",
+    "license": "MIT",
+    "repository": "git://github.com/brianloveswords/node-jws.git",
+    "files": [
+      "jws@4.0.1-LICENSE"
+    ]
+  },
+  {
+    "name": "lodash",
+    "version": "4.18.1",
+    "license": "MIT",
+    "repository": "lodash/lodash",
+    "files": [
+      "lodash@4.18.1-LICENSE"
+    ]
+  },
+  {
+    "name": "lodash-es",
+    "version": "4.18.1",
+    "license": "MIT",
+    "repository": "lodash/lodash",
+    "files": [
+      "lodash-es@4.18.1-LICENSE"
+    ]
+  },
+  {
+    "name": "lodash.includes",
+    "version": "4.3.0",
+    "license": "MIT",
+    "repository": "lodash/lodash",
+    "files": [
+      "lodash.includes@4.3.0-LICENSE"
+    ]
+  },
+  {
+    "name": "lodash.isboolean",
+    "version": "3.0.3",
+    "license": "MIT",
+    "repository": "lodash/lodash",
+    "files": [
+      "lodash.isboolean@3.0.3-LICENSE"
+    ]
+  },
+  {
+    "name": "lodash.isinteger",
+    "version": "4.0.4",
+    "license": "MIT",
+    "repository": "lodash/lodash",
+    "files": [
+      "lodash.isinteger@4.0.4-LICENSE"
+    ]
+  },
+  {
+    "name": "lodash.isnumber",
+    "version": "3.0.3",
+    "license": "MIT",
+    "repository": "lodash/lodash",
+    "files": [
+      "lodash.isnumber@3.0.3-LICENSE"
+    ]
+  },
+  {
+    "name": "lodash.isplainobject",
+    "version": "4.0.6",
+    "license": "MIT",
+    "repository": "lodash/lodash",
+    "files": [
+      "lodash.isplainobject@4.0.6-LICENSE"
+    ]
+  },
+  {
+    "name": "lodash.isstring",
+    "version": "4.0.1",
+    "license": "MIT",
+    "repository": "lodash/lodash",
+    "files": [
+      "lodash.isstring@4.0.1-LICENSE"
+    ]
+  },
+  {
+    "name": "lodash.once",
+    "version": "4.1.1",
+    "license": "MIT",
+    "repository": "lodash/lodash",
+    "files": [
+      "lodash.once@4.1.1-LICENSE"
+    ]
+  },
+  {
+    "name": "magic-string",
+    "version": "0.30.21",
+    "license": "MIT",
+    "repository": "git+https://github.com/Rich-Harris/magic-string.git",
+    "files": [
+      "magic-string@0.30.21-LICENSE"
+    ]
+  },
+  {
+    "name": "ms",
+    "version": "2.1.3",
+    "license": "MIT",
+    "repository": "vercel/ms",
+    "files": [
+      "ms@2.1.3-license.md"
+    ]
+  },
+  {
+    "name": "naive-ui",
+    "version": "2.45.3",
+    "license": "MIT",
+    "repository": "https://github.com/tusen-ai/naive-ui",
+    "files": [
+      "naive-ui@2.45.3-LICENSE"
+    ]
+  },
+  {
+    "name": "nanoid",
+    "version": "3.3.20",
+    "license": "MIT",
+    "repository": "ai/nanoid",
+    "files": [
+      "nanoid@3.3.20-LICENSE"
+    ]
+  },
+  {
+    "name": "node-html-parser",
+    "version": "6.1.13",
+    "license": "MIT",
+    "repository": "https://github.com/taoqf/node-fast-html-parser.git",
+    "files": [
+      "node-html-parser@6.1.13-LICENSE"
+    ]
+  },
+  {
+    "name": "nth-check",
+    "version": "2.1.1",
+    "license": "BSD-2-Clause",
+    "repository": "https://github.com/fb55/nth-check",
+    "files": [
+      "nth-check@2.1.1-LICENSE"
+    ]
+  },
+  {
+    "name": "pend",
+    "version": "1.2.0",
+    "license": "MIT",
+    "repository": "git://github.com/andrewrk/node-pend.git",
+    "files": [
+      "pend@1.2.0-LICENSE"
+    ]
+  },
+  {
+    "name": "picocolors",
+    "version": "1.1.1",
+    "license": "ISC",
+    "repository": "alexeyraspopov/picocolors",
+    "files": [
+      "picocolors@1.1.1-LICENSE"
+    ]
+  },
+  {
+    "name": "postcss",
+    "version": "8.5.32",
+    "license": "MIT",
+    "repository": "postcss/postcss",
+    "files": [
+      "postcss@8.5.32-LICENSE"
+    ]
+  },
+  {
+    "name": "safe-buffer",
+    "version": "5.2.1",
+    "license": "MIT",
+    "repository": "git://github.com/feross/safe-buffer.git",
+    "files": [
+      "safe-buffer@5.2.1-LICENSE"
+    ]
+  },
+  {
+    "name": "seemly",
+    "version": "0.3.10",
+    "license": "MIT",
+    "repository": "",
+    "files": [
+      "seemly@0.3.10-LICENSE"
+    ]
+  },
+  {
+    "name": "semver",
+    "version": "7.8.6",
+    "license": "ISC",
+    "repository": "git+https://github.com/npm/node-semver.git",
+    "files": [
+      "semver@7.8.6-LICENSE"
+    ]
+  },
+  {
+    "name": "source-map-js",
+    "version": "1.2.2",
+    "license": "BSD-3-Clause",
+    "repository": "7rulnik/source-map-js",
+    "files": [
+      "source-map-js@1.2.2-LICENSE"
+    ]
+  },
+  {
+    "name": "treemate",
+    "version": "0.3.11",
+    "license": "MIT",
+    "repository": "git+https://github.com/07akioni/treemate.git",
+    "files": [
+      "treemate@0.3.11-LICENSE"
+    ]
+  },
+  {
+    "name": "typescript",
+    "version": "5.9.3",
+    "license": "Apache-2.0",
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "files": [
+      "typescript@5.9.3-LICENSE.txt"
+    ]
+  },
+  {
+    "name": "undici",
+    "version": "7.30.1",
+    "license": "MIT",
+    "repository": "git+https://github.com/nodejs/undici.git",
+    "files": [
+      "undici@7.30.1-LICENSE"
+    ]
+  },
+  {
+    "name": "undici-types",
+    "version": "7.16.0",
+    "license": "MIT",
+    "repository": "git+https://github.com/nodejs/undici.git",
+    "files": [
+      "undici-types@7.16.0-LICENSE"
+    ]
+  },
+  {
+    "name": "uuid",
+    "version": "14.0.3",
+    "license": "MIT",
+    "repository": "https://github.com/uuidjs/uuid.git",
+    "files": [
+      "uuid@14.0.3-LICENSE.md"
+    ]
+  },
+  {
+    "name": "vdirs",
+    "version": "0.1.8",
+    "license": "MIT",
+    "repository": "",
+    "files": []
+  },
+  {
+    "name": "vooks",
+    "version": "0.2.12",
+    "license": "MIT",
+    "repository": "",
+    "files": [
+      "vooks@0.2.12-LICENSE"
+    ]
+  },
+  {
+    "name": "vue",
+    "version": "3.5.45",
+    "license": "MIT",
+    "repository": "git+https://github.com/vuejs/core.git",
+    "files": [
+      "vue@3.5.45-LICENSE"
+    ]
+  },
+  {
+    "name": "vueuc",
+    "version": "0.4.66",
+    "license": "MIT",
+    "repository": "",
+    "files": [
+      "vueuc@0.4.66-LICENSE"
+    ]
+  },
+  {
+    "name": "yauzl",
+    "version": "3.4.0",
+    "license": "MIT",
+    "repository": "git+https://github.com/thejoshwolfe/yauzl.git",
+    "files": [
+      "yauzl@3.4.0-LICENSE"
+    ]
+  },
+  {
+    "name": "yauzl",
+    "version": "2.10.0",
+    "license": "MIT",
+    "repository": "https://github.com/thejoshwolfe/yauzl.git",
+    "files": [
+      "yauzl@2.10.0-LICENSE"
+    ]
+  },
+  {
+    "name": "yazl",
+    "version": "2.5.1",
+    "license": "MIT",
+    "repository": "https://github.com/thejoshwolfe/yazl.git",
+    "files": [
+      "yazl@2.5.1-LICENSE"
+    ]
+  }
+]

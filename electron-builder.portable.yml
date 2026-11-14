@@ -1,0 +1,7 @@
+extends: ./electron-builder.yml
+win:
+  target: portable
+portable:
+  artifactName: Luquora Launcher Portable 0.1.0.exe
+  requestExecutionLevel: user
+  unpackDirName: false
