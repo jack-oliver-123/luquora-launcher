@@ -157,3 +157,15 @@ E2E 调试裁定：首次完整运行两处 `page.screenshot` 在 `LQL_HIDDEN=1`
 本地已修复该错误的提示：`auth:minecraft` 的 HTTP 401/403 不再建议“稍后重试”，而是明确说明账号登录成功、应用被 Minecraft 服务拒绝并指向服务 API 准入；页面错误条与登录弹窗都显示安全的阶段标签。失败弹窗保留可读原因直到用户关闭或重新授权，不显示响应正文。新回归先观察到旧行为 RED，再通过；`npm test` 53 通过 / 2 跳过，`npm run typecheck` 退出 0，开发与独立安装版 UI E2E 均通过，安装版 E2E 1/1、安装版工作流 1/1、诊断 E2E 1/1。已检查实际诊断截图。
 
 本轮 NSIS 用本地 Electron 发行目录构建，安装到隔离目录 `C:\Users\Jack\AppData\Local\Programs\LuquoraLauncher-Study`，安装退出 0；安装前的备份位置记录在本轮命令输出中。**新增安装文件** `release/Luquora Launcher Setup 0.1.0.exe`：134,585,553 字节，SHA-256 `82AC4A799CA69BBCB9A4F65D50A258507B62976611A95FFDEF07E213167F3FF0`。正式便携包仍被用户正在运行的旧实例占用，未结束该进程；此前的便携包不包含本轮错误提示修复。仍需应用所有者提交审核，然后以真实授权账号验证 Minecraft 令牌、权益、角色和正版服务器登录。既有应用注册经确认获批前，不宣称正版登录已完成。
+
+## 2026-11-14 GitHub 首次提交
+
+工作区已作为公开仓库 [jack-oliver-123/luquora-launcher](https://github.com/jack-oliver-123/luquora-launcher) 提交并推送：
+
+| 项目 | 值 |
+| --- | --- |
+| 分支 | `main`（跟踪 `origin/main`） |
+| 首次提交 | `c275269847fbbaf0aa13e3e0657ba0b5abf30c12` `feat: initial Luquora Launcher v0.1` |
+| 内容 | 166 个文件，13,464 行新增 |
+
+提交前未纳入误生成的临时审计输出。提交后工作区干净，`git ls-remote --heads origin` 返回上述提交，GitHub API 确认仓库为 `public` 且默认分支为 `main`。本机直连 GitHub 的 TLS 握手失败，推送在单条命令内临时指定 `http.proxy` / `https.proxy` 为 `http://127.0.0.1:7890` 并使用 `http.sslBackend=openssl`，未修改全局 Git 配置。提交后 `npm run typecheck` 退出 0，`npm test` 53 通过 / 2 跳过。项目自身许可证仍未选定，仓库暂不含项目 `LICENSE` 文件；推送不改变上述应用准入待审核状态。
