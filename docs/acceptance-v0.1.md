@@ -181,4 +181,4 @@ E2E 调试裁定：首次完整运行两处 `page.screenshot` 在 `LQL_HIDDEN=1`
 | 联系邮箱 | 与门户当前登录账户一致 |
 | 网站 | `https://github.com/jack-oliver-123/luquora-launcher` |
 
-早先草稿误将应用“对象 ID” `42c351ff-1bf0-4240-ad06-79fdc452e7d5` 当作 Tenant ID；该草稿并未提交，因此没有错误回复进入审核队列。说明明确写明 LQL 不绕过身份验证和正版校验、不提供离线模式、不复用其他启动器的 Client ID，以及当前失败于 `auth:minecraft` 的 HTTP 403。表单声明每周审核，重复提交不会加快；审核结果与 allow list 生效时间未知，在获批并用真实账号走通 Minecraft 令牌、权益和正版服务器前，不宣称正版登录已完成。
+首次预填时曾把应用“对象 ID” `42c351ff-1bf0-4240-ad06-79fdc452e7d5` 填入 Tenant ID，且联系邮箱为空；该不完整回复已经提交，审核方可能因此跳过或要求补充。随后提交的完整回复已改为上表正确的 Directory (Tenant) ID 和联系邮箱，并明确写明 LQL 不绕过身份验证和正版校验、不提供离线模式、不复用其他启动器的 Client ID，以及当前失败于 `auth:minecraft` 的 HTTP 403。表单声明每周审核，重复提交不会加快；审核结果与 allow list 生效时间未知，在获批并用真实账号走通 Minecraft 令牌、权益和正版服务器前，不宣称正版登录已完成。
