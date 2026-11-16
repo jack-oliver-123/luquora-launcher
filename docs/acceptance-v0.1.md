@@ -182,3 +182,13 @@ E2E 调试裁定：首次完整运行两处 `page.screenshot` 在 `LQL_HIDDEN=1`
 | 网站 | `https://github.com/jack-oliver-123/luquora-launcher` |
 
 首次预填时曾把应用“对象 ID” `42c351ff-1bf0-4240-ad06-79fdc452e7d5` 填入 Tenant ID，且联系邮箱为空；该不完整回复已经提交，审核方可能因此跳过或要求补充。随后提交的完整回复已改为上表正确的 Directory (Tenant) ID 和联系邮箱，并明确写明 LQL 不绕过身份验证和正版校验、不提供离线模式、不复用其他启动器的 Client ID，以及当前失败于 `auth:minecraft` 的 HTTP 403。表单声明每周审核，重复提交不会加快；审核结果与 allow list 生效时间未知，在获批并用真实账号走通 Minecraft 令牌、权益和正版服务器前，不宣称正版登录已完成。
+
+## 2026-11-16 如何确认审核结果
+
+没有可以查询审核状态的公开页面，Azure 门户与 Entra 应用注册也不会显示 Mojang 的 allow list 状态。判断通过需要三个相互独立的证据：
+
+1. **审核通知**：Mojang 把结果发到审核表第 2 题填写的联系邮箱。已有第三方启动器作者记录收到标题为确认性质的邮件，并在邮件后登录成功（[Helios/MRS Launcher 记录](https://devppaka.tistory.com/entry/%EB%A7%88%EC%9D%B8%ED%81%AC%EB%9E%98%ED%94%84%ED%8A%B8-%EC%BB%A4%EC%8A%A4%ED%85%80-%EB%9F%B0%EC%B2%98-Helios-Launcher-MRS-Launcher-6)）。邮箱为 `211472325@qq.com`，需检查收件箱与垃圾邮件；表单原文只承诺 weekly review，没有承诺邮件时限或固定发件地址。
+2. **真实账号走通 `auth:minecraft`**：在 LQL 中重新授权同一 Microsoft 账号，Minecraft 页显示账号资料而非错误弹窗。这条是唯一可靠的生效证明：allow list 公告后可能仍需等待缓存或分批生效，邮件本身不代表已生效。
+3. **权益与正版服务器**：令牌交换成功后仍会检查 `entitlements/mcstore` 和 `profile`；正版服务器登录还需游戏内通过会话服务。任一环节失败都不应记作审核通过。
+
+以下迹象**不能**作为通过依据：表单提交后的 “Thank you for contacting Mojang Studios.”，微软 OAuth 的 “大功告成” 页面，Azure 门户中应用注册的任意状态，以及 `login_with_xbox` 对其他 client ID 成功。LQL 的 403 识别在 `auth:minecraft` 阶段；若错误变为 `auth:ownership` 或 `auth:profile`，说明应用已取得令牌，但账号本身不满足权益或资料条件，需要按对应阶段排查。审核被拒绝时邮件是唯一通知渠道，官方说明不提供申诉入口；被拒后应先核对提交是否含正确 Tenant ID 与有效邮箱，再考虑重新申请。
