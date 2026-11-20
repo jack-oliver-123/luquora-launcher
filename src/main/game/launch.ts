@@ -65,7 +65,7 @@ export class LaunchService {
       const gamePath = await ensureManagedDirectory(this.store.config.gameRoot, join(this.store.instancePath(id), 'game'))
       const nativeRoot = await ensureManagedDirectory(this.store.config.gameRoot, join(this.store.instancePath(id), 'natives', randomUUID()))
       const resourcePath = join(this.store.config.gameRoot, 'shared')
-      const core = await Version.parse(resourcePath, version.id)
+      const core = await Version.parse(resourcePath, instance.launchVersionId ?? version.id)
       const options = { version: core, gamePath, resourcePath, javaPath: java.executable, maxMemory: settings.memoryMiB, minMemory: Math.min(512, settings.memoryMiB), resolution: { width: settings.width, height: settings.height, fullscreen: settings.fullscreen }, gameProfile: { name: identity.name, id: identity.uuid }, accessToken: identity.accessToken, ...(local ? { userType: 'legacy' as const } : {}), launcherName: 'Luquora Launcher', launcherBrand: 'LQL', nativeRoot, extraMCArgs: [] as string[] }
       const args = await generateArguments(options)
       for (let index = 0; index < args.length; index++) args[index] = args[index].replaceAll('${clientid}', identity.clientId).replaceAll('${auth_xuid}', identity.xuid)

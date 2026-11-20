@@ -5,10 +5,17 @@ import { randomUUID } from 'node:crypto'
 import type { AppConfig, Instance, LaunchSettings, LocalProfile } from '../../shared/contracts'
 import { createLocalProfile } from '../auth/local'
 import { LauncherError } from '../errors'
+import type { LoaderSpec } from '../../shared/content'
 import { assertManagedPath, ensureManagedDirectory } from './paths'
 
 export const validId = (value: unknown): value is string => typeof value === 'string' && /^[a-f0-9-]{36}$/.test(value)
 export const validVersion = (value: unknown): value is string => typeof value === 'string' && /^[a-zA-Z0-9][a-zA-Z0-9._-]{0,79}$/.test(value) && !value.includes('..')
+
+export function validateLoader(loader: unknown): asserts loader is LoaderSpec | undefined {
+  if (loader === undefined) return
+  const value = loader as LoaderSpec
+  if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).some(key => !['kind', 'version'].includes(key)) || !['fabric', 'forge', 'neoforge', 'quilt'].includes(value.kind) || !validVersion(value.version)) throw new LauncherError('INVALID_INPUT', '加载器类型或版本无效。')
+}
 
 export function validateSettings(settings: LaunchSettings): void {
   if (!settings || Object.keys(settings).some(key => !['memoryMiB', 'width', 'height', 'fullscreen', 'javaPath'].includes(key)) || !Number.isInteger(settings.memoryMiB) || settings.memoryMiB < 256 || settings.memoryMiB > Math.floor(totalmem() / 1048576 * 0.8) || !Number.isInteger(settings.width) || !Number.isInteger(settings.height) || settings.width < 320 || settings.width > 16384 || settings.height < 320 || settings.height > 16384 || typeof settings.fullscreen !== 'boolean' || !(settings.javaPath === null || typeof settings.javaPath === 'string' && isAbsolute(settings.javaPath))) throw new LauncherError('INVALID_INPUT', '启动设置无效。', '检查内存、窗口大小和 Java 路径。')
@@ -23,6 +30,8 @@ function validateConfig(config: AppConfig): void {
     if (profile.name !== expected.name || profile.uuid !== expected.uuid || profile.id !== expected.id || profile.kind !== 'local' || profile.status !== 'ready') throw new Error('invalid local profile')
   }
   for (const instance of config.instances) {
+    validateLoader(instance.loader)
+    if (instance.launchVersionId !== undefined && !validVersion(instance.launchVersionId) || instance.staging !== undefined && typeof instance.staging !== 'boolean') throw new Error('invalid loader metadata')
     if (!validId(instance.id) || !validVersion(instance.versionId) || typeof instance.name !== 'string' || !instance.name.trim() || instance.name.length > 80 || !['incomplete', 'ready'].includes(instance.installation) || !Number.isFinite(Date.parse(instance.createdAt)) || !instance.overrides || Array.isArray(instance.overrides)) throw new Error('invalid instance')
     validateSettings({ ...config.defaults, ...instance.overrides })
   }
@@ -80,12 +89,13 @@ export class Store {
     if (this.config.selectedAccountId === id) this.config.selectedAccountId = this.config.localProfiles[0]?.id ?? fallbackId
     await this.commit()
   }
-  async createInstance(name: string, versionId: string): Promise<Instance> {
+  async createInstance(name: string, versionId: string, loader?: LoaderSpec, staging = false): Promise<Instance> {
+    validateLoader(loader)
     if (typeof name !== 'string' || !name.trim() || name.length > 80 || !validVersion(versionId)) throw new LauncherError('INVALID_INPUT', '请输入有效名称和游戏版本。')
-    const instance: Instance = { id: randomUUID(), name: name.trim(), versionId, createdAt: new Date().toISOString(), installation: 'incomplete', overrides: {} }
+    const instance: Instance = { id: randomUUID(), name: name.trim(), versionId, createdAt: new Date().toISOString(), installation: 'incomplete', overrides: {}, ...(loader ? { loader: { ...loader } } : {}), ...(staging ? { staging: true } : {}) }
     await ensureManagedDirectory(this.config.gameRoot, join(this.config.gameRoot, 'instances', instance.id, 'game'))
     this.config.instances.push(instance)
-    this.config.selectedInstanceId = instance.id
+    if (!staging) this.config.selectedInstanceId = instance.id
     await this.commit()
     return instance
   }

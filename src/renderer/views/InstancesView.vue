@@ -6,22 +6,24 @@ import type { Instance } from '../../shared/contracts'
 import { api, launcher, perform } from '../state'
 import InstanceEditor from '../components/InstanceEditor.vue'
 
-const emit = defineEmits<{ accounts: []; logs: [] }>()
+const emit = defineEmits<{ accounts: []; logs: []; content: [] }>()
 const showEditor = ref(false)
 const editing = ref<Instance | null>(null)
 const snapshot = computed(() => launcher.snapshot!)
 const account = computed(() => snapshot.value.accounts.find(item => item.id === snapshot.value.config.selectedAccountId))
 const selected = computed(() => snapshot.value.config.instances.find(item => item.id === snapshot.value.config.selectedInstanceId) ?? snapshot.value.config.instances[0])
 const gameActive = computed(() => ['checking', 'starting', 'running'].includes(snapshot.value.game.phase))
-const stages = { metadata: '获取版本信息', java: '准备 Java 运行时', files: '下载与校验游戏文件', verify: '完成校验', complete: '安装完成' }
+const contentActive = computed(() => snapshot.value.contentTasks?.some(task => ['queued', 'running'].includes(task.phase)))
+const stages = { metadata: '获取版本信息', java: '准备 Java 运行时', files: '下载与校验游戏文件', loader: '安装模组加载器', verify: '完成校验', complete: '安装完成' }
 const progress = computed(() => { const task = snapshot.value.installation; return task?.total ? Math.min(100, Math.round(task.completed / task.total * 100)) : undefined })
-const menu = [{ label: '实例设置', key: 'edit' }, { label: '打开实例目录', key: 'folder' }, { label: '查看日志', key: 'logs' }, { type: 'divider', key: 'divider' }, { label: '移入回收站', key: 'delete' }]
+const menu = [{ label: '内容管理', key: 'content' }, { label: '实例设置', key: 'edit' }, { label: '打开实例目录', key: 'folder' }, { label: '查看日志', key: 'logs' }, { type: 'divider', key: 'divider' }, { label: '移入回收站', key: 'delete' }]
 function editor(instance: Instance | null) { editing.value = instance; showEditor.value = true }
-function busy(instance: Instance) { return snapshot.value.installation?.instanceId === instance.id || gameActive.value && snapshot.value.game.instanceId === instance.id }
+function busy(instance: Instance) { return contentActive.value || snapshot.value.installation?.instanceId === instance.id || gameActive.value && snapshot.value.game.instanceId === instance.id }
 function menuSelect(key: string, instance: Instance) {
   if (key === 'edit') editor(instance)
   else if (key === 'folder') void perform('folder', () => api.openInstanceFolder(instance.id))
   else if (key === 'logs') emit('logs')
+  else if (key === 'content') void perform('select-content', async () => { await api.selectInstance(instance.id); emit('content') })
   else if (key === 'delete') void perform('delete', () => api.removeInstance(instance.id))
 }
 function launch(instance: Instance) { void perform('launch', () => api.launchInstance(instance.id)) }

@@ -1,28 +1,54 @@
 import { createHash, randomUUID } from 'node:crypto'
 import { createReadStream } from 'node:fs'
 import { open, rename, rm, stat } from 'node:fs/promises'
-import { dirname } from 'node:path'
+import { dirname, resolve } from 'node:path'
 import { setTimeout as delay } from 'node:timers/promises'
 import { LauncherError } from '../errors'
 import { assertManagedPath, ensureManagedDirectory } from '../storage/paths'
 
-export type DownloadFile = { url: string; path: string; sha1: string; size: number }
+export type DownloadFile = { url: string; path: string; sha1?: string; sha512?: string; size: number }
+export const CONTENT_HOSTS = ['cdn.modrinth.com', 'github.com', 'raw.githubusercontent.com', 'objects.githubusercontent.com', 'release-assets.githubusercontent.com', 'gitlab.com']
+export function checkDownloadUrl(value: string, allowedHosts?: string[], allowLocalHttp = false): URL {
+  const url = new URL(value)
+  if ((url.protocol !== 'https:' && !(allowLocalHttp && url.protocol === 'http:' && url.hostname === '127.0.0.1')) || url.username || url.password || url.port && !['443', '80'].includes(url.port) && !allowLocalHttp || allowedHosts && !allowedHosts.includes(url.hostname)) throw new LauncherError('INTEGRITY', '下载地址不在允许的来源中。')
+  return url
+}
+export async function fetchDownload(url: string, signal: AbortSignal, allowedHosts?: string[], allowLocalHttp = false): Promise<Response> {
+  let current = url
+  for (let redirects = 0; redirects <= 5; redirects++) {
+    checkDownloadUrl(current, allowedHosts, allowLocalHttp)
+    const response = await fetch(current, { signal, redirect: 'manual', headers: { 'User-Agent': 'LuquoraLauncher/0.2.0' } })
+    if (![301, 302, 303, 307, 308].includes(response.status)) return response
+    const location = response.headers.get('location')
+    await response.body?.cancel()
+    if (!location) break
+    current = new URL(location, current).href
+  }
+  throw new LauncherError('NETWORK', '下载重定向次数过多。')
+}
+function digest(file: DownloadFile): { algorithm: string; expected: string } {
+  if (file.sha512 && /^[a-f0-9]{128}$/i.test(file.sha512)) return { algorithm: 'sha512', expected: file.sha512.toLowerCase() }
+  if (file.sha1 && /^[a-f0-9]{40}$/i.test(file.sha1)) return { algorithm: 'sha1', expected: file.sha1.toLowerCase() }
+  throw new LauncherError('INTEGRITY', '文件缺少有效的校验摘要。')
+}
 export async function fileValid(file: DownloadFile): Promise<boolean> {
   try {
     if ((await stat(file.path)).size !== file.size) return false
-    const hash = createHash('sha1')
+    const { algorithm, expected } = digest(file)
+    const hash = createHash(algorithm)
     for await (const chunk of createReadStream(file.path)) hash.update(chunk)
-    return hash.digest('hex') === file.sha1
+    return hash.digest('hex') === expected
   } catch (error) { if (['ENOENT', 'EISDIR'].includes((error as NodeJS.ErrnoException).code ?? '')) return false; throw error }
 }
 
-export async function downloadFile(root: string, file: DownloadFile, signal: AbortSignal, progress: (bytes: number) => void, options: { allowLocalHttp?: boolean; retryDelay?: number } = {}): Promise<void> {
+export async function downloadFile(root: string, file: DownloadFile, signal: AbortSignal, progress: (bytes: number) => void, options: { allowLocalHttp?: boolean; retryDelay?: number; allowedHosts?: string[] } = {}): Promise<void> {
   signal.throwIfAborted()
-  const url = new URL(file.url)
-  if ((url.protocol !== 'https:' && !(options.allowLocalHttp && url.protocol === 'http:' && url.hostname === '127.0.0.1')) || url.username || url.password || !/^[a-f0-9]{40}$/i.test(file.sha1) || !Number.isSafeInteger(file.size) || file.size < 0) throw new LauncherError('INTEGRITY', '下载元数据无效。')
+  checkDownloadUrl(file.url, options.allowedHosts, options.allowLocalHttp)
+  const { algorithm, expected } = digest(file)
+  if (!Number.isSafeInteger(file.size) || file.size < 0) throw new LauncherError('INTEGRITY', '下载元数据无效。')
   await assertManagedPath(root, file.path)
   if (await fileValid(file)) { progress(file.size); return }
-  await ensureManagedDirectory(root, dirname(file.path))
+  if (resolve(dirname(file.path)) !== resolve(root)) await ensureManagedDirectory(root, dirname(file.path))
   for (let attempt = 0; attempt < 3; attempt++) {
     signal.throwIfAborted()
     const temporary = `${file.path}.${randomUUID()}.part`
@@ -31,7 +57,7 @@ export async function downloadFile(root: string, file: DownloadFile, signal: Abo
       const timeout = new AbortController()
       const reset = () => { clearTimeout(idle); idle = setTimeout(() => timeout.abort(), 30000) }
       reset()
-      const response = await fetch(url, { signal: AbortSignal.any([signal, timeout.signal]) })
+      const response = await fetchDownload(file.url, AbortSignal.any([signal, timeout.signal]), options.allowedHosts, options.allowLocalHttp)
       if (response.status === 429) {
         const retryAfter = response.headers.get('retry-after')
         const waitMs = retryAfter && /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : retryAfter ? Date.parse(retryAfter) - Date.now() : 1000
@@ -42,7 +68,7 @@ export async function downloadFile(root: string, file: DownloadFile, signal: Abo
       }
       if (!response.ok || !response.body) throw new LauncherError('NETWORK', `下载服务响应异常（${response.status}）。`)
       const handle = await open(temporary, 'wx')
-      const hash = createHash('sha1')
+      const hash = createHash(algorithm)
       let received = 0
       try {
         for await (const chunk of response.body) {
@@ -53,7 +79,7 @@ export async function downloadFile(root: string, file: DownloadFile, signal: Abo
           await handle.write(chunk)
         }
       } finally { await handle.close() }
-      if (received !== file.size || hash.digest('hex') !== file.sha1) throw new LauncherError('INTEGRITY', '文件完整性校验失败。')
+      if (received !== file.size || hash.digest('hex') !== expected) throw new LauncherError('INTEGRITY', '文件完整性校验失败。')
       signal.throwIfAborted()
       await assertManagedPath(root, file.path)
       await rename(temporary, file.path)

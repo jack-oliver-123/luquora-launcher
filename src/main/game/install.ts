@@ -9,12 +9,14 @@ import type { AppError, InstallProgress } from '../../shared/contracts'
 import { MetadataService, type ResolvedVersion } from './metadata'
 import { downloadFile, fileValid, inParallel, type DownloadFile } from './download'
 import { resolveJava } from './java'
+import { LoaderService } from './loaders'
 
 export class InstallService {
+  readonly loaders: LoaderService
   progress: InstallProgress | null = null
   private controller: AbortController | null = null
   private completion: Promise<void> = Promise.resolve()
-  constructor(private store: Store, private metadata: Pick<MetadataService, 'resolve'>, private changed: () => void, private report: (error: AppError) => void, private running: (id: string) => boolean) {}
+  constructor(private store: Store, private metadata: Pick<MetadataService, 'resolve'>, private changed: () => void, private report: (error: AppError) => void, private running: (id: string) => boolean) { this.loaders = new LoaderService(() => store.config.gameRoot) }
   isBusy(id?: string): boolean { return !!this.controller && (!id || this.progress?.instanceId === id) }
   private update(stage: InstallProgress['stage'], completed = 0, total: number | null = null, unit: 'bytes' | 'files' = 'files'): void {
     if (!this.progress) return
@@ -60,12 +62,16 @@ export class InstallService {
         controller.signal.throwIfAborted()
         const version = await this.metadata.resolve(instance.versionId, controller.signal)
         this.update('java')
-        await resolveJava(this.store.config.gameRoot, version, this.store.settings(id).javaPath, controller.signal, (completed, total) => this.update('java', completed, total))
+        const java = await resolveJava(this.store.config.gameRoot, version, this.store.settings(id).javaPath, controller.signal, (completed, total) => this.update('java', completed, total))
         const { files } = await this.plan(version, controller.signal)
         let completed = 0
         const total = files.reduce((sum, file) => sum + file.size, 0)
         this.update('files', completed, total, 'bytes')
         await inParallel(files, async file => { await downloadFile(this.store.config.gameRoot, file, controller.signal, bytes => { completed += bytes; this.update('files', completed, total, 'bytes') }) }, controller.signal)
+        if (instance.loader) {
+          this.update('loader')
+          instance.launchVersionId = await this.loaders.install(instance, java.executable, controller.signal, (_stage, completed, total) => this.update('loader', completed, total, 'bytes'))
+        }
         this.update('verify')
         controller.signal.throwIfAborted()
         instance.installation = 'ready'; await this.store.commit()
@@ -86,6 +92,7 @@ export class InstallService {
     const { files } = await this.plan(version, signal)
     let valid = true
     await inParallel(files, async file => { await assertManagedPath(this.store.config.gameRoot, file.path); if (!await fileValid(file)) valid = false }, signal)
+    if (!await this.loaders.verify(instance)) valid = false
     if (!valid) { instance.installation = 'incomplete'; await this.store.commit(); this.changed() }
     return valid
   }

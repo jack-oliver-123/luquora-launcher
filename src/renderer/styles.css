@@ -121,5 +121,39 @@ h1 { font-size: 32px; line-height: 1.35; letter-spacing: -1.3px; font-weight: 65
 .editor-modal { width: min(560px, calc(100vw - 36px)); }
 .auth-modal { width: min(470px, calc(100vw - 36px)); }
 .java-field .n-form-item-blank { display: flex; }
+.resource-tabs { margin-bottom: 20px; }
+.resource-search { display: grid; grid-template-columns: minmax(160px, 2fr) minmax(140px, 1fr) minmax(120px, 1fr) auto; gap: 10px; margin-bottom: 20px; }
+.resource-meta { display: flex; justify-content: space-between; color: #85858e; font-size: 12px; margin: 18px 0 12px; }
+.resource-results { display: grid; gap: 10px; }
+.resource-result { display: flex; width: 100%; align-items: center; gap: 18px; padding: 21px; text-align: left; font: inherit; color: inherit; cursor: pointer; border: 1px solid #e4e4e9; }
+.resource-result:hover { border-color: #9e9eab; background: #fafafa; }
+.resource-result:focus-visible { outline: 2px solid #54545a; outline-offset: 2px; }
+.resource-symbol { flex: 0 0 48px; height: 48px; display: grid; place-items: center; border-radius: 12px; background: #f0f0f4; color: #686872; }
+.resource-copy { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.resource-copy h3 { font-size: 16px; margin-bottom: 5px; }
+.resource-copy p { font-size: 13px; color: #6d6d77; line-height: 1.6; margin: 5px 0; }
+.resource-copy small, .resource-open { font-size: 11px; color: #85858e; }
+.resource-pagination { margin-top: 24px; justify-content: center; }
+.content-loading { padding: 60px 20px; text-align: center; color: #85858e; }
+.content-loading p { margin-top: 14px; }
+.content-modal, .resource-detail-modal { width: min(720px, calc(100vw - 36px)); max-height: calc(100vh - 48px); overflow: auto; }
+.resource-body { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 240px; overflow: auto; color: #62626c; font-size: 13px; line-height: 1.7; margin: 20px 0; padding: 18px; background: #f7f7f9; border-radius: 10px; }
+.optional-files { display: grid; gap: 8px; max-height: 200px; overflow: auto; margin-bottom: 20px; overflow-wrap: anywhere; }
+.pack-summary { margin-bottom: 20px; padding: 20px; }
+.pack-summary h2 { font-size: 20px; }
+.pack-summary p { color: #85858e; margin: 8px 0 15px; }
+.content-toolbar { display: flex; gap: 10px; margin-bottom: 20px; }
+.content-toolbar > .n-select, .content-toolbar > .n-input { flex: 1; min-width: 0; }
+.content-row { display: flex; align-items: center; gap: 12px; padding: 18px; border-bottom: 1px solid #eeeef2; }
+.content-row:last-child { border-bottom: 0; }
+.content-backups { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 30px; padding: 20px 0; border-top: 1px solid #e4e4e9; }
+.content-backups > div { flex: 1; min-width: 200px; }
+.content-backups p { margin-top: 5px; font-size: 12px; color: #85858e; }
+.change-details { margin-top: 18px; overflow-wrap: anywhere; }
+.plan-list { margin-bottom: 20px; }
+.plan-item { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 14px 0; border-bottom: 1px solid #eeeef2; overflow-wrap: anywhere; }
+.plan-item p { margin-top: 5px; color: #85858e; font-size: 12px; }
+.change-details ul { max-height: 220px; overflow: auto; font-size: 12px; padding-left: 22px; }
+@media (max-width: 1050px) { .resource-search { grid-template-columns: 1fr 1fr; } .content-row { flex-wrap: wrap; } .content-row .resource-copy { flex-basis: 55%; } }
 @media (max-width: 1050px) { .page-content { padding: 28px 24px; } .settings-layout { grid-template-columns: 1fr; } .settings-aside { display: grid; grid-template-columns: 1fr 1fr; } .launcher-shell { grid-template-columns: 198px minmax(0, 1fr); } .sidebar { padding-left: 13px; padding-right: 13px; } }
 @media (max-width: 760px) { .launcher-shell { grid-template-columns: 72px minmax(0, 1fr); } .sidebar { padding: 24px 9px 14px; } .brand { justify-content: center; padding: 0; margin-bottom: 28px; } .brand div, .sidebar-foot, .nav-button span:not(.n-button__icon) { display: none; } .sidebar .nav-button { justify-content: center; padding: 0; } .sidebar .nav-button .n-button__icon { margin: 0; } .page-content { padding: 22px 17px; } h1 { font-size: 26px; } .instance-focus { flex-wrap: wrap; } .focus-actions { margin-left: 127px; } .settings-aside { grid-template-columns: 1fr; } }

@@ -21,6 +21,16 @@ test('settings persist while mutable instance directories stay isolated through 
   expect(reloaded.config.instances[0].id).toBe(first.id)
 })
 
+test('loader metadata persists and invalid combinations cannot enter configuration', async () => {
+  const { Store } = await storage()
+  const root = await temporary()
+  const store = await Store.open(root)
+  const instance = await store.createInstance('Fabric', '1.20.1', { kind: 'fabric', version: '0.16.14' })
+  expect((await Store.open(root)).getInstance(instance.id).loader).toEqual({ kind: 'fabric', version: '0.16.14' })
+  await expect(store.createInstance('bad', '1.20.1', { kind: 'unknown', version: '../escape' } as never)).rejects.toThrow()
+  expect((await Store.open(root)).config.instances).toHaveLength(1)
+})
+
 test('corrupt settings are preserved and never silently replaced', async () => {
   const { Store } = await storage()
   const root = await temporary()

@@ -1,0 +1,15 @@
+export type LoaderKind = 'fabric' | 'forge' | 'neoforge' | 'quilt'
+export type LoaderSpec = { kind: LoaderKind; version: string }
+export type LoaderVersion = { version: string; stable: boolean }
+export type ContentKind = 'mod' | 'modpack' | 'resourcepack' | 'shader'
+export type ContentFile = { filename: string; url: string; size: number; hashes: { sha1?: string; sha512?: string }; primary?: boolean }
+export type ContentVersion = { id: string; project_id: string; name: string; version_number: string; version_type: string; game_versions: string[]; loaders: string[]; files: ContentFile[]; dependencies: { project_id: string | null; version_id: string | null; dependency_type: string }[] }
+export type ContentProject = { id: string; slug: string; title: string; description: string; body: string; project_type: ContentKind; client_side: string; license: { id: string; name: string }; author?: string }
+export type SearchQuery = { query: string; kind: ContentKind; gameVersion?: string; loader?: LoaderKind; offset?: number }
+export type SearchResult = { hits: { project_id: string; slug: string; title: string; description: string; author: string; downloads: number; project_type: ContentKind }[]; total_hits: number; offset: number; limit: number }
+export type ManagedContent = { path: string; name: string; kind: Exclude<ContentKind, 'modpack'>; sha512: string; projectId?: string; versionId?: string; versionName?: string; disabled?: boolean }
+export type InstanceContent = ManagedContent & { modified?: boolean }
+export type ResourcePlan = { id: string; instanceId: string; title: string; files: { project: ContentProject; version: ContentVersion; file: ContentFile; path: string; replaces?: string }[] }
+export type PackPreview = { id: string; name: string; version: string; gameVersion: string; loader?: LoaderSpec; required: number; optional: string[]; changes?: string[] }
+export type ContentTask = { id: string; title: string; instanceId?: string; phase: 'queued' | 'running' | 'complete' | 'failed' | 'cancelled'; stage: string; completed: number; total: number | null; error?: string; startedAt: string }
+export type ContentListing = { files: InstanceContent[]; pack?: { name: string; version: string; projectId?: string; versionId?: string }; canRestore: boolean; backupsBytes?: number }

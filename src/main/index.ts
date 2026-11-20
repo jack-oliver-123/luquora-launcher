@@ -11,6 +11,7 @@ import { LaunchService } from './game/launch'
 import { LogService } from './logging'
 import { registerIPC } from './ipc'
 import { publicError } from './errors'
+import { ContentService } from './content/service'
 
 const directory = fileURLToPath(new URL('.', import.meta.url))
 app.setName('LuquoraLauncher')
@@ -30,33 +31,41 @@ else app.whenReady().then(async () => {
   let game: LaunchService
   const installer = new InstallService(store, metadata, changed, report, id => game?.blocksInstance(id) ?? false)
   game = new LaunchService(store, accounts, metadata, installer, logs, changed, report)
-  const snapshot = (): AppSnapshot => ({ config: structuredClone(store.config), accounts: [...accounts.list(), ...structuredClone(store.config.localProfiles)], installation: installer.progress, game: game.status(), logs: logs.summaries, authPending: accounts.pending, persistentAuth: cache.persistent, clientConfigured: !!accounts.clientId })
+  const { shell } = await import('electron')
+  const content = new ContentService(store, installer, changed, id => game.blocksInstance(id), path => shell.trashItem(path))
+  const snapshot = (): AppSnapshot => {
+    const config = structuredClone(store.config)
+    config.instances = config.instances.filter(instance => !instance.staging)
+    if (!config.instances.some(instance => instance.id === config.selectedInstanceId)) config.selectedInstanceId = config.instances[0]?.id ?? null
+    return { config, accounts: [...accounts.list(), ...structuredClone(store.config.localProfiles)], installation: installer.progress, game: game.status(), logs: logs.summaries, authPending: accounts.pending, persistentAuth: cache.persistent, clientConfigured: !!accounts.clientId, contentTasks: structuredClone(content.tasks) }
+  }
   await accounts.initialize().catch(error => report(publicError(error, 'auth')))
   await logs.initialize()
   await game.recover()
+  await content.initialize().catch(error => report(publicError(error, 'content:recovery')))
   window = new BrowserWindow({ title: 'Luquora Launcher', icon: join(directory, '../../build/icon.png'), width: 1280, height: 820, minWidth: 960, minHeight: 640, backgroundColor: '#f5f5f7', show: process.env.LQL_HIDDEN !== '1', webPreferences: { preload: join(directory, '../preload/index.cjs'), contextIsolation: true, sandbox: true, nodeIntegration: false, webSecurity: true } })
   window.setMenuBarVisibility(false)
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }))
   window.webContents.on('will-navigate', event => event.preventDefault())
-  registerIPC(window, { store, accounts, metadata, installer, game, logs, snapshot, changed })
+  registerIPC(window, { store, accounts, metadata, installer, game, logs, content, snapshot, changed })
   app.on('second-instance', () => { if (window?.isMinimized()) window.restore(); window?.focus() })
   let exiting = false
   let confirming = false
   window.on('close', event => {
-    if (exiting || !installer.isBusy() && !game.busy && !accounts.pending) return
+    if (exiting || !installer.isBusy() && !content.busy && !game.busy && !accounts.pending) return
     event.preventDefault()
     if (confirming) return
     confirming = true
     void (async () => {
       const answer = await dialog.showMessageBox(window!, { type: 'warning', title: '退出 Luquora Launcher', message: game.busy ? '结束游戏并退出？请先保存游戏进度。' : '取消当前任务并退出？已校验文件会保留。', buttons: ['取消', '结束任务并退出'], defaultId: 0, cancelId: 0 })
       if (answer.response !== 1) return
-      await accounts.cancel(); await installer.cancel()
+      await accounts.cancel(); await content.cancel(); await installer.cancel()
       if (game.busy) await game.stop(false)
       if (game.busy) return
       exiting = true; window?.close()
     })().catch(error => report(publicError(error, 'shutdown'))).finally(() => { confirming = false })
   })
-  app.on('before-quit', event => { if (!exiting && (installer.isBusy() || game.busy || accounts.pending)) { event.preventDefault(); window?.close() } })
+  app.on('before-quit', event => { if (!exiting && (installer.isBusy() || content.busy || game.busy || accounts.pending)) { event.preventDefault(); window?.close() } })
   if (process.env.ELECTRON_RENDERER_URL) await window.loadURL(process.env.ELECTRON_RENDERER_URL)
   else await window.loadFile(join(directory, '../renderer/index.html'))
   for (const error of startupErrors) report(error)
